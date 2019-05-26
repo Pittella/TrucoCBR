@@ -24,6 +24,22 @@ public class ExemploConsultas {
 	return cartaParaJogar;
  }
  
+ public Integer respostaPrimeiraCartaTeste(int Alta, int Media, int Baixa) {
+	 description.setCartaAltaRobo(Alta);
+	 description.setCartaMediaRobo(Media);
+	 description.setCartaBaixaRobo(Baixa);
+	 int cartaParaJogar = 0;
+	 RespondeRobo resposta = new RespondeRobo();
+	 
+	 try {
+		cartaParaJogar = resposta.jogaCarta(description, 1);
+	} catch (ExecutionException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return cartaParaJogar;
+ }
+ 
  public Integer respostaSegundaCarta() {
 	 description.setCartaAltaRobo(52);
 	 description.setCartaMediaRobo(16);
