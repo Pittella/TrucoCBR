@@ -71,6 +71,40 @@ public class ExemploConsultas {
 	}
 	return cartaParaJogar;
  }
+ 
+ public Integer chamarTruco(int Alta, int Media, int Baixa) {
+	 description.setCartaAltaRobo(Alta);
+	 description.setCartaMediaRobo(Media);
+	 description.setCartaBaixaRobo(Baixa);
+	 int chamarTruco = 0;
+	 RespondeRobo resposta = new RespondeRobo();
+	 
+	 try {
+		chamarTruco = resposta.chamaTruco(description, 1);
+	} catch (ExecutionException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return chamarTruco;
+ }
+ 
+ public Integer chamarEnvido(int Alta, int Media, int Baixa, int jogadorMao, int pontosEnvidoRobo) {
+	 description.setCartaAltaRobo(Alta);
+	 description.setCartaMediaRobo(Media);
+	 description.setCartaBaixaRobo(Baixa);
+	 description.setJogadorMao(jogadorMao);
+	 description.setPontosEnvidoRobo(pontosEnvidoRobo);
+	 int chamarEnvido = 0;
+	 RespondeRobo resposta = new RespondeRobo();
+	 
+	 try {
+		chamarEnvido = resposta.chamaEnvido(description, 1);
+	} catch (ExecutionException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return chamarEnvido;
+ }
 }
 
 

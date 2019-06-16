@@ -9,7 +9,7 @@ public class TrucoBot {
         Luigi.setNome("BOT_Cbr");
         
         PlayingTruco JogoDeTruco = new PlayingTruco();
-        
+     
         JogoDeTruco.Match(Mario, Luigi);       
 
     }
