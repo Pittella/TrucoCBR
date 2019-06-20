@@ -331,6 +331,8 @@ public class PlayingTruco {
 
         //CBR stuff        
         if (A.souBot == true) {
+        	
+        	//Isso aqui eh so para o bot jogar uma carta
         	System.out.println("Sort Mao");
         	int[] pesos = SortHandToBot(A.PHand);        	
         	int peso = botExemploResposta.respostaPrimeiraCartaTeste(pesos[0],pesos[1], pesos[2]);
