@@ -12,7 +12,7 @@ import jcolibri.exception.ExecutionException;
 public class PlayingTruco {
 
     public TrucoDescription gameState = new TrucoDescription();
-    public RespondeRobo bot = new RespondeRobo();
+    //public RespondeRobo bot = new RespondeRobo();
 
     Deck MatchDeck = new Deck();
     public Card[] MesaA = new Card[3];
@@ -26,6 +26,9 @@ public class PlayingTruco {
     boolean JaChamaraminvido = false;
     boolean AlguemNaoAceitouTruco = false;
     boolean EmpardouPrimeira, EmpardouSegunda, EmpardouTerceira;
+   
+    //Para Realizar Consultas
+    public ExemploConsultas botExemploResposta = new ExemploConsultas(); 
 
     public void DealCards(Hand A, Hand B) {
         MatchDeck.ShuffleDeckArray();
@@ -328,7 +331,14 @@ public class PlayingTruco {
 
         //CBR stuff        
         if (A.souBot == true) {
-        	EscolhaDaJogada = PosCartas(A.PHand);
+        	
+        	//Isso aqui eh so para o bot jogar uma carta
+        	System.out.println("Sort Mao");
+        	int[] pesos = SortHandToBot(A.PHand);        	
+        	int peso = botExemploResposta.respostaPrimeiraCartaTeste(pesos[0],pesos[1], pesos[2]);
+        	int inputDoBot = verificaPosicaoDaCarta(A.PHand,peso);
+        	System.out.println("Escolha do bot");
+        	EscolhaDaJogada = inputDoBot;
             /*try {
                 //codigo do input do bot kkk
                 //EscolhaDaJogada = bot.jogaCarta(gameState, CountRodada); //Cometar essa linha pq sem ela da erro por enquanto
@@ -824,53 +834,51 @@ public class PlayingTruco {
         }
     }
     
-    public int PosCartas(Hand Mao) {
-    	int posAlta = 0;
-    	int posMedia = 0;
-    	int posBaixa = 0;
+
+    public int[] SortHandToBot(Hand Mao) {
+    	int[] pesos = new int[3];
+    	if(Mao.HandArray[0].peso > Mao.HandArray[1].peso && Mao.HandArray[0].peso > Mao.HandArray[2].peso) {
+    		pesos[0] = Mao.HandArray[0].peso;
+    		if(Mao.HandArray[1].peso > Mao.HandArray[2].peso) {
+    			pesos[1] = Mao.HandArray[1].peso;
+    			pesos[2] = Mao.HandArray[2].peso;
+    		} else {
+    			pesos[1] = Mao.HandArray[2].peso;
+    			pesos[2] = Mao.HandArray[1].peso;
+    		}
+    	} else if (Mao.HandArray[1].peso > Mao.HandArray[0].peso && Mao.HandArray[1].peso > Mao.HandArray[2].peso) {
+    		pesos[0] = Mao.HandArray[1].peso;
+    		if(Mao.HandArray[0].peso > Mao.HandArray[2].peso) {
+    			pesos[1] = Mao.HandArray[0].peso;
+    			pesos[2] = Mao.HandArray[2].peso;
+    		} else {
+    			pesos[1] = Mao.HandArray[2].peso;
+    			pesos[2] = Mao.HandArray[0].peso;
+    		}
+    	} else {
+    		pesos[0] = Mao.HandArray[2].peso;
+    		if(Mao.HandArray[0].peso > Mao.HandArray[1].peso) {
+    			pesos[1] = Mao.HandArray[0].peso;
+    			pesos[2] = Mao.HandArray[1].peso;
+    		} else {
+    			pesos[1] = Mao.HandArray[1].peso;
+    			pesos[2] = Mao.HandArray[0].peso;
+    		}
+    	}    	
     	
-	   	 gameState.setCartaAltaRobo(gameState.getCartaAltaRobo());
-	   	 gameState.setCartaMediaRobo(gameState.getCartaMediaRobo());
-	   	 gameState.setCartaBaixaRobo(gameState.getCartaBaixaRobo());
-    	
-    	
-    	if(gameState.getCartaAltaRobo() == Mao.HandArray[0].peso)
-    		posAlta = 1;
-    	if(gameState.getCartaAltaRobo() == Mao.HandArray[1].peso)
-    		posAlta = 2;
-    	if(gameState.getCartaAltaRobo() == Mao.HandArray[2].peso)
-    		posAlta = 3;
-    	if(gameState.getCartaMediaRobo() == Mao.HandArray[0].peso)
-    		posMedia = 1;
-    	if(gameState.getCartaMediaRobo() == Mao.HandArray[1].peso)
-    		posMedia = 2;
-    	if(gameState.getCartaMediaRobo() == Mao.HandArray[2].peso)
-    		posMedia = 3;
-    	if(gameState.getCartaBaixaRobo() == Mao.HandArray[0].peso)
-    		posBaixa = 1;
-    	if(gameState.getCartaBaixaRobo() == Mao.HandArray[1].peso)
-    		posBaixa = 2;
-    	if(gameState.getCartaBaixaRobo() == Mao.HandArray[2].peso)
-    		posBaixa = 3;
-    	try {
-			if(bot.jogaCarta(gameState, CountRodada) == gameState.getCartaAltaRobo())
-			{
-				return posAlta;
-			}else {
-				if(bot.jogaCarta(gameState, CountRodada) == gameState.getCartaMediaRobo()) {
-					return posMedia;
-				}else {
-					return posBaixa;
-				}
-			}
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	
-    	
-    	return 0;
+    	return pesos;
     }
 
+    public int verificaPosicaoDaCarta(Hand Mao, int peso){
+    	int posicao = 0;
+    	if(peso == Mao.HandArray[0].peso)
+    		posicao = 1;
+    	if(peso == Mao.HandArray[1].peso)
+    		posicao = 2;
+    	if(peso == Mao.HandArray[2].peso)
+    		posicao = 3;
+    	
+    	return posicao;    	
+    	
+    }
 }

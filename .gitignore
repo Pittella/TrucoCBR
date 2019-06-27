@@ -1,3 +1,5 @@
 
 *.class
-bin/PlayingTruco.class
+*.class
+*.class
+*.class
