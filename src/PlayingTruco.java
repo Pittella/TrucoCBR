@@ -331,7 +331,7 @@ public class PlayingTruco {
 
         //CBR stuff        
         if (A.souBot == true) {
-        	
+        	//TESTE
         	//Isso aqui eh so para o bot jogar uma carta
         	System.out.println("Sort Mao");
         	int[] pesos = SortHandToBot(A.PHand);        	
@@ -410,7 +410,7 @@ public class PlayingTruco {
                 A.PodeChamarInvido = false;
                 B.PodeChamarInvido = false;
                 if (B.PHand.ChecarFlor() == true) {
-                    System.out.println("Contra Flor é Proíbido!");
+                    System.out.println("Contra Flor EH Proibido!");
                     System.out.println(A.getNome() + " cantou " + A.PHand.CalcEnvido());
 
                     System.out.println(B.getNome() + " cantou " + B.PHand.CalcEnvido());
@@ -441,7 +441,7 @@ public class PlayingTruco {
                 System.out.println("Causando o fim da rodada");
                 B.setPontos(B.getPontos() + this.PesoDaMao);
                 this.RodadaEmAndamento = false;
-                this.AlguemNaoAceitouTruco = true; //Aqui estou usando um artifício para ignorar setJogadorMao na Funcao Match
+                this.AlguemNaoAceitouTruco = true; //Aqui estou usando um artifú€io para ignorar setJogadorMao na Funcao Match
                 B.setJogadorMao(true);
                 A.setJogadorMao(false);
                 B.VezDeJogar = false;
