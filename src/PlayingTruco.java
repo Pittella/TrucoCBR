@@ -15,8 +15,8 @@ public class PlayingTruco {
     //public RespondeRobo bot = new RespondeRobo();
 
     Deck MatchDeck = new Deck();
-    public Card[] MesaA = new Card[3];
-    public Card[] MesaB = new Card[3];
+    //public Card[] MesaA = new Card[3];
+    //public Card[] MesaB = new Card[3];
 
     public boolean RodadaEmAndamento;       //Comentar seria legal
     int PesoDaMao;
@@ -28,12 +28,13 @@ public class PlayingTruco {
     boolean EmpardouPrimeira, EmpardouSegunda, EmpardouTerceira;
    
     //Para Realizar Consultas
-    public ExemploConsultas botExemploResposta = new ExemploConsultas(); 
+    public ExemploConsultas botResposta = new ExemploConsultas(); 
 
     public void DealCards(Hand A, Hand B) {
         MatchDeck.ShuffleDeckArray();
         A.SetCards(MatchDeck.DeckArray[0], MatchDeck.DeckArray[2], MatchDeck.DeckArray[4]);
         B.SetCards(MatchDeck.DeckArray[1], MatchDeck.DeckArray[3], MatchDeck.DeckArray[5]);
+         
     }
 
     public void Match(Player A, Player B) {
@@ -55,6 +56,12 @@ public class PlayingTruco {
         boolean loop = true;
         while (loop) {
             DealCards(A.getPlayerHand(), B.getPlayerHand());
+            A.Mesa[0]=A.PHand.CartaVazia;
+            A.Mesa[1]=A.PHand.CartaVazia;
+            A.Mesa[2]=A.PHand.CartaVazia;
+            B.Mesa[0]=A.PHand.CartaVazia;
+            B.Mesa[1]=A.PHand.CartaVazia;
+            B.Mesa[2]=A.PHand.CartaVazia;      
             System.out.println("Inicio da Mao");
             if (A.JogadorMao == true) {
                 System.out.println(A.getNome() + " Primeiro Jogador na mao");
@@ -115,6 +122,8 @@ public class PlayingTruco {
         this.EmpardouPrimeira = false;
         this.EmpardouSegunda = false;
         this.EmpardouTerceira = false;
+        
+        
 
         while (this.RodadaEmAndamento == true) {
             if (this.CountRodada >= 4) {
@@ -256,6 +265,16 @@ public class PlayingTruco {
                 }
 
                 this.CountRodada = this.CountRodada + 1;
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
+                System.out.printf("\n");
                 if (this.CountRodada > 1) {
                     A.PodeChamarInvido = false;
                     B.PodeChamarInvido = false;
@@ -329,23 +348,57 @@ public class PlayingTruco {
             System.out.println("(1)(2)(3)Cartas (9)Ir ao Baralho ");
         }
 
-        //CBR stuff        
+        //BOT_CBR stuff        
         if (A.souBot == true) {
+        	//Hierarquia das decisoes do bot
+        	//Chamar flor?        	
+        	//Chamar invido?        	
+        	//chamar truco?        	
+        	//jogar carta
         	
-        	//Isso aqui eh so para o bot jogar uma carta
+        	int intJogadorMao=0;
+        	if(A.JogadorMao==true) {
+        		intJogadorMao=2;
+        	} else{
+        		intJogadorMao=1;
+        	}
+        
         	System.out.println("Sort Mao");
         	int[] pesos = SortHandToBot(A.PHand);        	
-        	int peso = botExemploResposta.respostaPrimeiraCartaTeste(pesos[0],pesos[1], pesos[2]);
-        	int inputDoBot = verificaPosicaoDaCarta(A.PHand,peso);
-        	System.out.println("Escolha do bot");
-        	EscolhaDaJogada = inputDoBot;
-            /*try {
-                //codigo do input do bot kkk
-                //EscolhaDaJogada = bot.jogaCarta(gameState, CountRodada); //Cometar essa linha pq sem ela da erro por enquanto
-            	
-           		} catch (ExecutionException ex) {
-                Logger.getLogger(PlayingTruco.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+        	
+        	
+        	if(A.PHand.ChecarFlor()==true) {
+        		//Chama flor se tiver flor
+        		System.out.println("Bot Chamour Flor");
+        		EscolhaDaJogada = 8;        		
+        	} else {
+        		//Chamar invido
+        		//Exemplo:
+        		//System.out.println("Consulta chamou envido "+ new ExemploConsultas().respostaChamarEnvido(1, 33));
+        		if(botResposta.respostaChamarEnvido(intJogadorMao, A.PHand.CalcEnvido())==5 && this.CountRodada ==1) {
+        			System.out.println("Bot Chamou Invido");
+        			EscolhaDaJogada = 5; 
+        		} else if(botResposta.respostaChamarTruco(pesos[0], pesos[1], pesos[2], intJogadorMao, B.Mesa[0].peso, B.Mesa[1].peso, B.Mesa[2].peso, this.CountRodada)==4) {
+        			System.out.println("Bot Chamou Truco");
+        			EscolhaDaJogada = 4; 
+        		} else {        		
+        		//Isso aqui eh so para o bot jogar uma carta
+        		System.out.println("Bot Escolheu Jogar Uma Carta");
+        		int peso = botResposta.respostaPrimeiraCartaTeste(pesos[0],pesos[1], pesos[2]);
+            	int inputDoBot = verificaPosicaoDaCarta(A.PHand,peso);
+            	System.out.println("Escolha do bot");
+            	EscolhaDaJogada = inputDoBot;
+        		}
+                /*try {
+                    //codigo do input do bot kkk
+                    //EscolhaDaJogada = bot.jogaCarta(gameState, CountRodada); //Cometar essa linha pq sem ela da erro por enquanto
+                	
+               		} catch (ExecutionException ex) {
+                    Logger.getLogger(PlayingTruco.class.getName()).log(Level.SEVERE, null, ex);
+                }*/	        		
+        	}
+        	
+        	
         } else {
             //codigo do input player
             EscolhaDaJogada = A.GetPlayerInput();
@@ -460,7 +513,21 @@ public class PlayingTruco {
             //A.PodeChamarOuAumentarTruco = false;
             //B.PodeChamarOuAumentarTruco = true;
             System.out.println(B.getNome() + " aceitas? (1)Sim (2)Nao (3)Aumentar");
-            RespostaTruco = B.GetPlayerInput();
+            
+//            if(B.souBot==true) {
+//            	//Bot
+//            	if(this.botResposta.respostaChamarRetruco(Alta, Media, Baixa, jogadorMao, primeiraCartaHumano, segundaCartaHumano, terceiraCartaHumano, rodada)==3) {
+//            		RespostaTruco = 3;
+//            	} else if(this.botResposta.respostaAceitarTruco(Alta, Media, Baixa, jogadorMao, primeiraCartaHumano, segundaCartaHumano, terceiraCartaHumano, rodada)==1) {
+//            		RespostaTruco = 1;
+//            	} else {
+//            		RespostaTruco = 2;
+//            	}
+//            }else {         	
+//            	//Player
+            	RespostaTruco = B.GetPlayerInput();
+//            }
+            
             switch (RespostaTruco) {
                 case 1:
                     System.out.println("Aceitastes");
