@@ -323,10 +323,9 @@ public class PlayingTruco {
 	public void OpcoesDeRodada(Player A, Player B) {
 		int EscolhaDaJogada = 0;
 
-		//System.out.println("Mao de " + A.getNome() + ":");
+		
 		System.out.printf("Vez: Mao de %s:", A.getNome());
-		A.PHand.PrintHand();
-		//System.out.println("Mao de " + B.getNome() + ":");
+		A.PHand.PrintHand();		
 		System.out.printf("Outro: Mao de %s:", B.getNome());
 		B.PHand.PrintHand();
 
@@ -364,10 +363,13 @@ public class PlayingTruco {
 			}
 
 			System.out.println("Sort Mao");
-			int[] pesos = SortHandToBot(A.PHand);        	
-
-
-			if(A.PHand.ChecarFlor()==true && A.PodeChamarFlor == true) {
+			int[] pesos = SortHandToBot(A.PHand);
+			
+//			if(this.CountRodada==1) {			
+//				A.PodeChamarFlor = A.PHand.ChecarFlor();
+//			}
+			
+			if(A.PHand.ChecarFlor()==true && A.PodeChamarFlor == true && this.CountRodada==1) {
 				//Chama flor se tiver flor
 				System.out.println("Bot Chamour Flor");
 				EscolhaDaJogada = 8;
@@ -381,7 +383,7 @@ public class PlayingTruco {
 					A.ChamouEnvido = true;
 					A.PodeChamarInvido = false;
 					EscolhaDaJogada = 5; 
-				} else if((botResposta.respostaChamarTruco(pesos[0], pesos[1], pesos[2], intJogadorMao, B.Mesa[0].peso, B.Mesa[1].peso, B.Mesa[2].peso, this.CountRodada)==4) && A.ChamouTruco == false) {
+				} else if((botResposta.respostaChamarTruco(pesos[0], pesos[1], pesos[2], intJogadorMao, B.Mesa[0].peso, B.Mesa[1].peso, B.Mesa[2].peso, this.CountRodada)==4) && A.ChamouTruco == false && this.PesoDaMao == 1) {
 					System.out.println("Bot Chamou Truco");
 					A.ChamouTruco = true;
 					EscolhaDaJogada = 4; 
@@ -424,6 +426,15 @@ public class PlayingTruco {
 				A.PHand.HandArray[EscolhaDaJogada - 1] = A.PHand.CartaVazia;
 
 				A.JogouUmaCarta = true;
+				
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
 
 				System.out.println(A.getNome() + " jogou " + A.Mesa[CountRodada - 1].Nome);
 
@@ -507,7 +518,7 @@ public class PlayingTruco {
 			A.PodeChamarInvido = false;
 			B.PodeChamarInvido = false;
 			if (B.PHand.ChecarFlor() == true) {
-				System.out.println("Contra Flor � Pro兊ido!");
+				System.out.println("Contra Flor ï¿½ Proå…Šido!");
 				System.out.println(A.getNome() + " cantou " + A.PHand.CalcEnvido());
 
 				System.out.println(B.getNome() + " cantou " + B.PHand.CalcEnvido());
@@ -538,7 +549,7 @@ public class PlayingTruco {
 			System.out.println("Causando o fim da rodada");
 			B.setPontos(B.getPontos() + this.PesoDaMao);
 			this.RodadaEmAndamento = false;
-			this.AlguemNaoAceitouTruco = true; //Aqui estou usando um artif兤io para ignorar setJogadorMao na Funcao Match
+			this.AlguemNaoAceitouTruco = true; //Aqui estou usando um artifå…¤io para ignorar setJogadorMao na Funcao Match
 			B.setJogadorMao(true);
 			A.setJogadorMao(false);
 			B.VezDeJogar = false;
@@ -556,6 +567,10 @@ public class PlayingTruco {
 			int RespostaTruco;
 			//A.PodeChamarOuAumentarTruco = false;
 			//B.PodeChamarOuAumentarTruco = true;
+			System.out.printf("Vez: Mao de %s:", A.getNome());
+			A.PHand.PrintHand();		
+			System.out.printf("Outro: Mao de %s:", B.getNome());
+			B.PHand.PrintHand();
 			System.out.println(B.getNome() + " aceitas? (1)Sim (2)Nao (3)Aumentar");
 			
 			RespostaTruco = 1;
@@ -647,6 +662,10 @@ public class PlayingTruco {
 					System.out.println(A.getNome() + " Aceitas? (1)Quero (2)Nao quero (3)Aumentar");
 
 					//RespostaTruco = A.GetPlayerInput();
+					System.out.printf("Vez: Mao de %s:", A.getNome());
+					A.PHand.PrintHand();		
+					System.out.printf("Outro: Mao de %s:", B.getNome());
+					B.PHand.PrintHand();
 
 					if(A.souBot==true) {
 						//Bot
@@ -726,6 +745,10 @@ public class PlayingTruco {
 							System.out.println(A.getNome() + " Aumentou o jogo para " + this.PesoDaMao);
 							System.out.println(B.getNome() + " Aceitas? (1)Quero (2)Nao quero");
 							//RespostaTruco = B.GetPlayerInput();
+							System.out.printf("Vez: Mao de %s:", A.getNome());
+							A.PHand.PrintHand();		
+							System.out.printf("Outro: Mao de %s:", B.getNome());
+							B.PHand.PrintHand();
 							
 							if(B.souBot==true) {
 								//Bot
@@ -1353,6 +1376,7 @@ public class PlayingTruco {
 				System.out.println("");
 				System.out.println("");
 				System.out.println(B.getNome() + " Arregou Falta Invido");
+				this.PesoDeInvido = 1;
 				A.setPontos(A.getPontos() + this.PesoDeInvido);
 				break;
 			default:
