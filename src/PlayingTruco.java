@@ -367,19 +367,23 @@ public class PlayingTruco {
 			int[] pesos = SortHandToBot(A.PHand);        	
 
 
-			if(A.PHand.ChecarFlor()==true) {
+			if(A.PHand.ChecarFlor()==true && A.PodeChamarFlor == true) {
 				//Chama flor se tiver flor
 				System.out.println("Bot Chamour Flor");
-				EscolhaDaJogada = 8;        		
+				EscolhaDaJogada = 8;
+				A.PodeChamarFlor = false;
 			} else {
 				//Chamar invido
 				//Exemplo:
 				//System.out.println("Consulta chamou envido "+ new ExemploConsultas().respostaChamarEnvido(1, 33));
-				if(botResposta.respostaChamarEnvido(intJogadorMao, A.PHand.CalcEnvido())==5 && this.CountRodada ==1) {
+				if((botResposta.respostaChamarEnvido(intJogadorMao, A.PHand.CalcEnvido())==5 && this.CountRodada ==1) && A.PodeChamarInvido == true) {
 					System.out.println("Bot Chamou Invido");
+					A.ChamouEnvido = true;
+					A.PodeChamarInvido = false;
 					EscolhaDaJogada = 5; 
-				} else if(botResposta.respostaChamarTruco(pesos[0], pesos[1], pesos[2], intJogadorMao, B.Mesa[0].peso, B.Mesa[1].peso, B.Mesa[2].peso, this.CountRodada)==4) {
+				} else if((botResposta.respostaChamarTruco(pesos[0], pesos[1], pesos[2], intJogadorMao, B.Mesa[0].peso, B.Mesa[1].peso, B.Mesa[2].peso, this.CountRodada)==4) && A.ChamouTruco == false) {
 					System.out.println("Bot Chamou Truco");
+					A.ChamouTruco = true;
 					EscolhaDaJogada = 4; 
 				} else {        		
 					//Isso aqui eh so para o bot jogar uma carta
@@ -429,12 +433,28 @@ public class PlayingTruco {
 			}
 			break;
 		case 4:
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println(A.getNome() + " chamou o jogo");
 			A.ChamouTruco = true;
 			B.ChamouTruco = false;
 			ChamouTruco(A, B);
 			break;
 		case 5:
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println(A.getNome() + " chamou invido");
 			this.PesoDeInvido = 1;
 			A.ChamouEnvido = true;
@@ -442,6 +462,14 @@ public class PlayingTruco {
 			ChamouEnvido(A, B);
 			break;
 		case 6:
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println(A.getNome() + " chamou real invido");
 			this.PesoDeInvido = 3;
 			A.ChamouEnvido = true;
@@ -449,6 +477,14 @@ public class PlayingTruco {
 			ChamouEnvido(A, B);
 			break;
 		case 7:
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println(A.getNome() + " chamou Falta invido");
 			this.ChamouFaltaInvido = true;
 			int ValorFalta = CalculoFalta(A.getPontos(), B.getPontos());
@@ -459,6 +495,14 @@ public class PlayingTruco {
 			ChamouEnvido(A, B);
 			break;
 		case 8:
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
+			System.out.println("");
 			System.out.println(A.getNome() + " chamou Flor");
 			A.PodeChamarInvido = false;
 			B.PodeChamarInvido = false;
@@ -560,13 +604,29 @@ public class PlayingTruco {
 
 			switch (RespostaTruco) {
 			case 1:
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
 				System.out.println("Aceitastes");
 				this.PesoDaMao = this.PesoDaMao + 1;
-				System.out.println("A m縊 agora vale" + this.PesoDaMao + " pontos.");
+				System.out.println("A mao agora vale" + this.PesoDaMao + " pontos.");
 				A.PodeChamarOuAumentarTruco = false;
 				B.PodeChamarOuAumentarTruco = true;
 				break;
 			case 2:
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
 				System.out.println(B.getNome() + "Recusastes");
 				System.out.println("Fim da rodada pois arregou do truco/retruco/vale4");
 				A.setPontos(A.getPontos() + this.PesoDaMao);
@@ -634,12 +694,20 @@ public class PlayingTruco {
 					case 1:
 						System.out.println(A.getNome() + " Aceitou aumentar");
 						this.PesoDaMao = this.PesoDaMao + 1;
-						System.out.println("A m縊 agora vale" + this.PesoDaMao + " pontos.");
+						System.out.println("A mao agora vale" + this.PesoDaMao + " pontos.");
 						A.PodeChamarOuAumentarTruco = true;
 						B.PodeChamarOuAumentarTruco = false;
 
 						break;
 					case 2:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
 						System.out.println(A.getNome() + "Recusastes");
 						System.out.println("Fim da rodada pois arregou do truco/retruco/vale4");
 						B.setPontos(B.getPontos() + this.PesoDaMao);
@@ -703,13 +771,29 @@ public class PlayingTruco {
 							
 							switch (RespostaTruco) {
 							case 1:
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
 								System.out.println("Aceitastes");
 								this.PesoDaMao = this.PesoDaMao + 1;
-								System.out.println("A m縊 agora vale" + this.PesoDaMao + " pontos.");
+								System.out.println("A mao agora vale" + this.PesoDaMao + " pontos.");
 								A.PodeChamarOuAumentarTruco = false;
 								B.PodeChamarOuAumentarTruco = false;
 								break;
 							case 2:
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
+								System.out.println("");
 								System.out.println(B.getNome() + "Recusastes");
 								System.out.println("Fim da rodada pois arregou do truco/retruco/vale4");
 								A.setPontos(A.getPontos() + this.PesoDaMao);
@@ -761,14 +845,17 @@ public class PlayingTruco {
 				}
 				if(botResposta.respostaAceitarEnvido(intJogadorMao, B.PHand.CalcEnvido())==1){
 					RespostaInvido = 1;
-				} else if(botResposta.respostaChamarEnvido(intJogadorMao, B.PHand.CalcEnvido())==3){
+				} else/* if(botResposta.respostaChamarEnvido(intJogadorMao, B.PHand.CalcEnvido())==3){
 					RespostaInvido = 3;					
-				} else if(botResposta.respostaChamarRealEnvido(intJogadorMao, B.PHand.CalcEnvido())==4){
-					RespostaInvido = 4;					
+				} else*/ if(botResposta.respostaChamarRealEnvido(intJogadorMao, B.PHand.CalcEnvido())==4){
+					RespostaInvido = 4;	
+					B.PodeChamarInvido = false;
 				} else if(botResposta.respostaChamarFaltaEnvido(intJogadorMao, B.PHand.CalcEnvido())==5){
-					RespostaInvido = 5;					
+					RespostaInvido = 5;
+					B.PodeChamarInvido = false;
 				} else {
-					RespostaInvido = 2;			
+					RespostaInvido = 2;		
+					B.ChamouEnvido = true;
 				}
 			} else{
 				//player humano
@@ -784,6 +871,14 @@ public class PlayingTruco {
 				//Invido    
 				break;
 			case 2:
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
 				System.out.println(B.getNome() + " Arregou o Invido");
 				A.setPontos(A.getPontos() + this.PesoDeInvido);
 				//Invido
@@ -827,6 +922,14 @@ public class PlayingTruco {
 					//Invido+Invido
 					break;
 				case 2:
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
 					System.out.println(A.getNome() + " Arregou Invido+Invido");
 					this.PesoDeInvido = 2;
 					B.setPontos(B.getPontos() + this.PesoDeInvido);
@@ -867,6 +970,14 @@ public class PlayingTruco {
 						//Invido+Invido+Real-Invido
 						break;
 					case 2:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
 						System.out.println(B.getNome() + " Arregou o invido+invido+Real Invido");
 						B.setPontos(B.getPontos() + this.PesoDeInvido);
 						//Invido+Invido+Real-Invido
@@ -903,6 +1014,14 @@ public class PlayingTruco {
 							CantarInvido(A, B);
 							//Invido+Invido+Real-Invido+Real-Invido
 						} else if (RespostaInvido == 2) {
+							System.out.println("");
+							System.out.println("");
+							System.out.println("");
+							System.out.println("");
+							System.out.println("");
+							System.out.println("");
+							System.out.println("");
+							System.out.println("");
 							System.out.println(A.getNome() + " Arregou invido+invido+Real invido+Falta invido");
 							B.setPontos(B.getPontos() + this.PesoDeInvido);
 						}
@@ -945,6 +1064,14 @@ public class PlayingTruco {
 						//invido+invido+falta invido 2
 					}
 					if (RespostaInvido == 2) {
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
 						System.out.println(B.getNome() + " Arregou invido+invido+Falta Invido");
 						A.setPontos(A.getPontos() + this.PesoDeInvido);
 					}
@@ -989,6 +1116,14 @@ public class PlayingTruco {
 					CantarInvido(A, B);
 					break;
 				case 2:
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
 					System.out.println(A.getNome() + " Arregou Invido+Real Invido");
 					B.setPontos(B.getPontos() + this.PesoDeInvido);
 					break;
@@ -1023,6 +1158,14 @@ public class PlayingTruco {
 						CantarInvido(A, B);
 						break;
 					case 2:
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
+						System.out.println("");
 						System.out.println(B.getNome() + " Arregou invido+real invido + falta invido");
 						A.setPontos(A.getPontos() + this.PesoDeInvido);
 						break;
@@ -1064,6 +1207,14 @@ public class PlayingTruco {
 					CantarInvido(A, B);
 					break;
 				case 2:
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
 					System.out.println(A.getNome() + " Arregou Invido+Falta Invido");
 					B.setPontos(B.getPontos() + this.PesoDeInvido);
 					break;
@@ -1104,6 +1255,14 @@ public class PlayingTruco {
 				CantarInvido(A, B);
 				break;
 			case 2:
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
 				System.out.println(B.getNome() + " Arregou Real Invido");
 				this.PesoDeInvido = 2;
 				A.setPontos(A.getPontos() + this.PesoDeInvido);
@@ -1140,6 +1299,14 @@ public class PlayingTruco {
 					CantarInvido(A, B);
 					break;
 				case 2:
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
+					System.out.println("");
 					System.out.println(A.getNome() + " Arregou Real Invido+ Falta Invido");
 					this.PesoDeInvido = 1;
 					break;
@@ -1177,6 +1344,14 @@ public class PlayingTruco {
 				CantarInvido(A, B);
 				break;
 			case 2:
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
+				System.out.println("");
 				System.out.println(B.getNome() + " Arregou Falta Invido");
 				A.setPontos(A.getPontos() + this.PesoDeInvido);
 				break;

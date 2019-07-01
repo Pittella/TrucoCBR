@@ -15,7 +15,7 @@ public class MostraConsultas {
 		//System.out.println("Consulta terceira carta "+ new ExemploConsultas().respostaTerceiraCarta());
 		// CHAMADAS
 		//System.out.println("Consulta chamou envido "+ new ExemploConsultas().respostaChamarEnvido(1, 33));
-		System.out.println("Consulta chamou truco "+ new ExemploConsultas().respostaChamarTruco(24, 16, 12, 2, -1, -1, -1, 1));
+		//System.out.println("Consulta chamou truco "+ new ExemploConsultas().respostaChamarTruco(24, 16, 12, 2, -1, -1, -1, 1));
 		//System.out.println("Consulta chamou Real envido "+ new ExemploConsultas().respostaChamarRealEnvido(	1, 33));
 		//System.out.println("Consulta chamou retruco "+ new ExemploConsultas().respostaChamarRetruco(52, 16, 1, 2, 16, 24, 5, 2));
 		//System.out.println("Consulta chamou Falta envido "+ new ExemploConsultas().respostaChamarFaltaEnvido(2, 33));
